@@ -1,0 +1,23 @@
+filter-by-commitish: true
+
+
+categories:
+  - title: '🚀 Features'
+    labels: ["enhancement"]
+  - title: '🐛 Bug Fixes'
+    labels: ["fix", "bug"]
+  - title: '📄 Documentation'
+    labels: ["documentation"]
+  - title: '🧹 Maintenance'
+    labels: ["chore", "maintenance", "refactor"]
+# If you want to exclude certain labels from the release notes, uncomment the following lines
+# exclude-labels:
+#   - 'chore'
+#   - 'maintenance'
+
+change-template: '- $TITLE (#$NUMBER) by @$AUTHOR'
+
+template: |
+  ## What's Changed in This Release
+
+  $CHANGES

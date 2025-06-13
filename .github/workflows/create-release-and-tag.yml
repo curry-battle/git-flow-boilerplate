@@ -1,0 +1,51 @@
+name: Create Release and Tag
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  release:
+    timeout-minutes: 10
+    if: >
+      github.event.pull_request.merged == true &&
+      startsWith(github.event.pull_request.title, 'Release v')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Extract version from PR title
+        id: version
+        run: |
+          echo "PR Title: ${{ github.event.pull_request.title }}"
+          
+          # e.g. "Release v1.2.3" to "v1.2.3"
+          pr_title="${{ github.event.pull_request.title }}"
+          release_version=${pr_title#"Release "}
+          
+          if [[ ! $release_version =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::Invalid version format. Expected format: v1.2.3"
+            exit 1
+          fi
+          
+          echo "Extracted version: $release_version"
+          echo "version=$release_version" >> $GITHUB_OUTPUT
+        shell: bash
+
+      - name: Run Release Drafter and Publish Release
+        uses: release-drafter/release-drafter@v6
+        with:
+          publish: false
+          version: ${{ steps.version.outputs.version }}
+          name: Release ${{ steps.version.outputs.version }}
+          tag: ${{ steps.version.outputs.version }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
