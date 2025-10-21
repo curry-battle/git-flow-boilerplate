@@ -13,7 +13,7 @@ For regular feature development and improvements, follow these steps:
    - Implement features and commit following the commit conventions
 
 3. **Create Pull Request**
-   - Create a pull request from `feature/*` → `develop`
+   - Create a pull request from `feature/*` -> `develop`
    - Apply appropriate labels (`enhancement`, `fix`, `documentation`, etc.)
    - Title format: `Feature: Add user authentication system`
 
@@ -37,14 +37,27 @@ When releasing a new version, follow these steps:
    - Adjust version numbers or release notes if necessary
    - Perform final testing and bug fixes
 
-3. **Merge to main**
+3. **Minor Fixes**
+  - Follow this procedure when there are minor fixes needed.
+  - Create a branch from the active `release/v*` branch, similar to the Basic Development Flow.
+    - In most cases, this will be a `fix/*` branch.
+  - Create a pull request from `fix/*` -> `release/v*`
+  - After review, merge using **Squash and merge**.
+
+> [!TIP]
+> You can also create the fix branch from the `develop` branch instead of the active `release/v*` branch.
+> (In this case, the later mentioned `Reflect changes from the release branch into develop` is not necessary.)
+> However, if `develop` is ahead of `release/v*` at that time, there is a risk of including commits not intended for release along with the fix. Be careful!
+
+4. **Merge to main**
    - Merge the release PR using **Create a merge commit**
    - Ensure the PR title follows the `Release v*` format
    - After merging, `create-release-and-tag.yml` automatically executes and creates a release draft
 
-4. **Merge back to develop**
-   - Create a pull request from `release/*` → `develop`
+5. **Merge back to develop**
+   - Create a pull request from `release/v*` -> `develop`
    - Reflect changes from the release branch into develop
+     -  merge using **Create a merge commit**
 
 ### Emergency Bug Fix Flow
 
@@ -57,13 +70,14 @@ When urgent fixes are needed in the production environment:
    - Implement emergency fixes and conduct thorough testing
 
 3. **Merge to main**
-   - Create a pull request from `hotfix/*` → `main`
+   - Create a pull request from `hotfix/*` -> `main`
    - Apply the `fix` label
    - After review completion, merge using **Create a merge commit**
 
 4. **Merge back to develop**
-   - Create a pull request from `hotfix/*` → `develop`
+   - Create a pull request from `hotfix/*` -> `develop`
    - Reflect hotfix changes into develop
+     - merge using **Create a merge commit**
 
 5. **Delete Branch**
    - Delete the hotfix branch after merging
@@ -85,7 +99,7 @@ see: [https://nvie.com/posts/a-successful-git-branching-model/](https://nvie.com
 ### Types of Branches
 
 - `main`: For production use. Only accepts PRs from `release` (and `hotfix` in emergencies).
-- `release/*`: Branches for release. You make adjustments for release on this branch. Only accepts PRs from `develop`.
+- `release/v*`: Branches for release. You make adjustments for release on this branch. Only accepts PRs from `develop`.
 - `develop`: Accepts PRs from `feature`, `release` branches.
 - `feature/*`: Branches for developing new features or improvements.
 - `hotfix/*`: Branches for urgent fixes.
@@ -146,12 +160,13 @@ tags will be applied to the PR.
 
 Create PRs according to the following rules:
 
-- `feature/*` → `develop`: Regular development flow
-- `develop` → `release/*`: Creating a release PR
-- `release/*` → `main`: Merging into `main` for release
-- `release/*` → `develop`: Merging release fixes back into `develop`
-- `hotfix/*` → `main`: Emergency fixes
-- `hotfix/*` → `develop`: Merging emergency fixes back into `develop`
+- `feature/*` -> `develop`: Regular development flow
+- `develop` -> `release/v*`: Creating a release PR
+- `fix/*` -> `release/v*`: Release fixes
+- `release/v*` -> `main`: Merging into `main` for release
+- `release/v*` -> `develop`: Merging release fixes back into `develop` (for "Release fixes" above)
+- `hotfix/*` -> `main`: Emergency fixes
+- `hotfix/*` -> `develop`: Merging emergency fixes back into `develop`
 
 ### Merge Rules
 
@@ -163,8 +178,15 @@ There are three merge methods available on GitHub:
 
 see: [https://docs.github.com/ja/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/about-pull-request-merges](https://docs.github.com/ja/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/about-pull-request-merges)
 
-Use __Squash and merge__ for merges into `develop` and `release/*`.  
-For merges into `main`, use __Create a merge commit__.
+Use __Squash and merge__ in the following cases:
+
+- `develop` (regular development flow)
+- `release/v*`
+
+Use __Create a merge commit__ in the following cases:
+
+- `main`
+- `develop` (when backporting branches derived from `release/v*`)
 
 > [!CAUTION]
 > Performing a Squash and merge into `main` will cause commit hash mismatches, leading to conflicts every time subsequent merges into `main` are attempted.
