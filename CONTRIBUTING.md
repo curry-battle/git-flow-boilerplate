@@ -162,8 +162,9 @@ Create PRs according to the following rules:
 
 - `feature/*` → `develop`: Regular development flow
 - `develop` → `release/v*`: Creating a release PR
+- `fix/*` → `release/v*`: Release fixes
 - `release/v*` → `main`: Merging into `main` for release
-- `release/v*` → `develop`: Merging release fixes back into `develop`
+- `release/v*` → `develop`: Merging release fixes back into `develop` (for "Release fixes" above)
 - `hotfix/*` → `main`: Emergency fixes
 - `hotfix/*` → `develop`: Merging emergency fixes back into `develop`
 
