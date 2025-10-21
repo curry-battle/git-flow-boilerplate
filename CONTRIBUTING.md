@@ -55,7 +55,7 @@ When releasing a new version, follow these steps:
    - After merging, `create-release-and-tag.yml` automatically executes and creates a release draft
 
 5. **Merge back to develop**
-   - Create a pull request from `release/*` → `develop`
+   - Create a pull request from `release/v*` → `develop`
    - Reflect changes from the release branch into develop
      -  merge using **Create a merge commit**
 
@@ -99,7 +99,7 @@ see: [https://nvie.com/posts/a-successful-git-branching-model/](https://nvie.com
 ### Types of Branches
 
 - `main`: For production use. Only accepts PRs from `release` (and `hotfix` in emergencies).
-- `release/*`: Branches for release. You make adjustments for release on this branch. Only accepts PRs from `develop`.
+- `release/v*`: Branches for release. You make adjustments for release on this branch. Only accepts PRs from `develop`.
 - `develop`: Accepts PRs from `feature`, `release` branches.
 - `feature/*`: Branches for developing new features or improvements.
 - `hotfix/*`: Branches for urgent fixes.
@@ -161,9 +161,9 @@ tags will be applied to the PR.
 Create PRs according to the following rules:
 
 - `feature/*` → `develop`: Regular development flow
-- `develop` → `release/*`: Creating a release PR
-- `release/*` → `main`: Merging into `main` for release
-- `release/*` → `develop`: Merging release fixes back into `develop`
+- `develop` → `release/v*`: Creating a release PR
+- `release/v*` → `main`: Merging into `main` for release
+- `release/v*` → `develop`: Merging release fixes back into `develop`
 - `hotfix/*` → `main`: Emergency fixes
 - `hotfix/*` → `develop`: Merging emergency fixes back into `develop`
 
@@ -180,12 +180,12 @@ see: [https://docs.github.com/ja/pull-requests/collaborating-with-pull-requests/
 Use __Squash and merge__ in the following cases:
 
 - `develop` (regular development flow)
-- `release/*`
+- `release/v*`
 
 Use __Create a merge commit__ in the following cases:
 
 - `main`
-- `develop` (when backporting from `release/*`)
+- `develop` (when backporting branches derived from `release/v*`)
 
 > [!CAUTION]
 > Performing a Squash and merge into `main` will cause commit hash mismatches, leading to conflicts every time subsequent merges into `main` are attempted.
