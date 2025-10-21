@@ -37,14 +37,27 @@ When releasing a new version, follow these steps:
    - Adjust version numbers or release notes if necessary
    - Perform final testing and bug fixes
 
-3. **Merge to main**
+3. **Minor Fixes**
+  - Follow this procedure when there are minor fixes needed.
+  - Create a branch from the active `release/v*` branch, similar to the Basic Development Flow.
+    - In most cases, this will be a `fix/*` branch.
+  - Create a pull request from `fix/*` → `release/v*`
+  - After review, merge using **Squash and merge**.
+
+> [!TIP]
+> You can also create the fix branch from the `develop` branch instead of the active `release/v*` branch.
+> (In this case, the later mentioned `Reflect changes from the release branch into develop` is not necessary.)
+> However, if `develop` is ahead of `release/v*` at that time, there is a risk of including commits not intended for release along with the fix. Be careful!
+
+4. **Merge to main**
    - Merge the release PR using **Create a merge commit**
    - Ensure the PR title follows the `Release v*` format
    - After merging, `create-release-and-tag.yml` automatically executes and creates a release draft
 
-4. **Merge back to develop**
+5. **Merge back to develop**
    - Create a pull request from `release/*` → `develop`
    - Reflect changes from the release branch into develop
+     -  merge using **Create a merge commit**
 
 ### Emergency Bug Fix Flow
 
@@ -64,6 +77,7 @@ When urgent fixes are needed in the production environment:
 4. **Merge back to develop**
    - Create a pull request from `hotfix/*` → `develop`
    - Reflect hotfix changes into develop
+     - merge using **Create a merge commit**
 
 5. **Delete Branch**
    - Delete the hotfix branch after merging
@@ -163,8 +177,15 @@ There are three merge methods available on GitHub:
 
 see: [https://docs.github.com/ja/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/about-pull-request-merges](https://docs.github.com/ja/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/about-pull-request-merges)
 
-Use __Squash and merge__ for merges into `develop` and `release/*`.  
-For merges into `main`, use __Create a merge commit__.
+Use __Squash and merge__ in the following cases:
+
+- `develop` (regular development flow)
+- `release/*`
+
+Use __Create a merge commit__ in the following cases:
+
+- `main`
+- `develop` (when backporting from `release/*`)
 
 > [!CAUTION]
 > Performing a Squash and merge into `main` will cause commit hash mismatches, leading to conflicts every time subsequent merges into `main` are attempted.
