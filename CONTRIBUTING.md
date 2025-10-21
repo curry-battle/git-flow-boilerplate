@@ -13,7 +13,7 @@ For regular feature development and improvements, follow these steps:
    - Implement features and commit following the commit conventions
 
 3. **Create Pull Request**
-   - Create a pull request from `feature/*` → `develop`
+   - Create a pull request from `feature/*` -> `develop`
    - Apply appropriate labels (`enhancement`, `fix`, `documentation`, etc.)
    - Title format: `Feature: Add user authentication system`
 
@@ -41,7 +41,7 @@ When releasing a new version, follow these steps:
   - Follow this procedure when there are minor fixes needed.
   - Create a branch from the active `release/v*` branch, similar to the Basic Development Flow.
     - In most cases, this will be a `fix/*` branch.
-  - Create a pull request from `fix/*` → `release/v*`
+  - Create a pull request from `fix/*` -> `release/v*`
   - After review, merge using **Squash and merge**.
 
 > [!TIP]
@@ -55,7 +55,7 @@ When releasing a new version, follow these steps:
    - After merging, `create-release-and-tag.yml` automatically executes and creates a release draft
 
 5. **Merge back to develop**
-   - Create a pull request from `release/v*` → `develop`
+   - Create a pull request from `release/v*` -> `develop`
    - Reflect changes from the release branch into develop
      -  merge using **Create a merge commit**
 
@@ -70,12 +70,12 @@ When urgent fixes are needed in the production environment:
    - Implement emergency fixes and conduct thorough testing
 
 3. **Merge to main**
-   - Create a pull request from `hotfix/*` → `main`
+   - Create a pull request from `hotfix/*` -> `main`
    - Apply the `fix` label
    - After review completion, merge using **Create a merge commit**
 
 4. **Merge back to develop**
-   - Create a pull request from `hotfix/*` → `develop`
+   - Create a pull request from `hotfix/*` -> `develop`
    - Reflect hotfix changes into develop
      - merge using **Create a merge commit**
 
@@ -160,13 +160,13 @@ tags will be applied to the PR.
 
 Create PRs according to the following rules:
 
-- `feature/*` → `develop`: Regular development flow
-- `develop` → `release/v*`: Creating a release PR
-- `fix/*` → `release/v*`: Release fixes
-- `release/v*` → `main`: Merging into `main` for release
-- `release/v*` → `develop`: Merging release fixes back into `develop` (for "Release fixes" above)
-- `hotfix/*` → `main`: Emergency fixes
-- `hotfix/*` → `develop`: Merging emergency fixes back into `develop`
+- `feature/*` -> `develop`: Regular development flow
+- `develop` -> `release/v*`: Creating a release PR
+- `fix/*` -> `release/v*`: Release fixes
+- `release/v*` -> `main`: Merging into `main` for release
+- `release/v*` -> `develop`: Merging release fixes back into `develop` (for "Release fixes" above)
+- `hotfix/*` -> `main`: Emergency fixes
+- `hotfix/*` -> `develop`: Merging emergency fixes back into `develop`
 
 ### Merge Rules
 
